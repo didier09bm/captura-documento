@@ -1,21 +1,22 @@
 // Referencias a los elementos del DOM
 const video = document.getElementById('webcam');
+const videoContainer = document.getElementById('videoContainer');
 const canvas = document.getElementById('canvas');
+const previewContainer = document.getElementById('previewContainer');
 const btnTomarFoto = document.getElementById('btnTomarFoto');
 const btnRepetir = document.getElementById('btnRepetir');
 const btnConfirmar = document.getElementById('btnConfirmar');
-const previewContainer = document.getElementById('previewContainer');
 
 let streamCamara = null;
 
-// 1. Solicitar acceso a la Webcam con una resolución amplia para evitar el zoom excesivo
+// 1. Solicitar acceso a la Webcam con resolución optimizada
 async function iniciarCamara() {
     try {
         const constraints = {
             video: { 
                 width: { ideal: 1920 },
                 height: { ideal: 1080 },
-                facingMode: "user" // Puedes cambiar a "environment" si prefieres usar la cámara trasera por defecto
+                facingMode: "user" // Cambiar a "environment" si prefieres usar la cámara trasera por defecto
             }, 
             audio: false 
         };
@@ -28,59 +29,51 @@ async function iniciarCamara() {
     }
 }
 
-// 2. Capturar la foto
+// 2. Capturar la foto y alternar contenedores
 btnTomarFoto.addEventListener('click', () => {
-    // Definimos el tamaño del canvas igual al video real
     canvas.width = video.videoWidth;
     canvas.height = video.videoHeight;
 
-    // Dibujamos el fotograma actual del video dentro del canvas
     const contexto = canvas.getContext('2d');
     contexto.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-    // Ocultamos el vídeo y mostramos la vista previa con el canvas
-    video.parentElement.classList.add('hidden');
+    // Ocultar la cámara en directo y mostrar exclusivamente la vista previa
+    videoContainer.classList.add('hidden');
     previewContainer.classList.remove('hidden');
 
-    // Cambiamos botones
+    // Cambiar visibilidad de los botones
     btnTomarFoto.classList.add('hidden');
     btnRepetir.classList.remove('hidden');
     btnConfirmar.classList.remove('hidden');
 });
 
-// 3. Repetir la foto
+// 3. Repetir la foto (volver a la cámara en directo)
 btnRepetir.addEventListener('click', () => {
-    // Volvemos a mostrar la cámara en vivo y ocultamos la vista previa
-    video.parentElement.classList.remove('hidden');
     previewContainer.classList.add('hidden');
+    videoContainer.classList.remove('hidden');
 
-    // Restablecemos los botones
     btnTomarFoto.classList.remove('hidden');
     btnRepetir.classList.add('hidden');
     btnConfirmar.classList.add('hidden');
 });
 
-// 4. Confirmar y guardar la foto en el ordenador o móvil
+// 4. Confirmar y descargar la foto localmente
 btnConfirmar.addEventListener('click', () => {
-    // Convertimos el contenido del canvas a una URL de datos en formato PNG
     const imagenURL = canvas.toDataURL('image/png');
 
-    // Creamos un elemento enlace temporal invisible
     const enlaceTemporal = document.createElement('a');
     enlaceTemporal.href = imagenURL;
     
-    // Asignamos un nombre único al archivo basado en la fecha y hora actual
     const fechaHora = new Date().toISOString().slice(0, 19).replace(/[:T]/g, '-');
     enlaceTemporal.download = `captura_documento_${fechaHora}.png`;
 
-    // Añadimos el enlace al documento, simulamos el clic para descargar y lo removemos
     document.body.appendChild(enlaceTemporal);
     enlaceTemporal.click();
     document.body.removeChild(enlaceTemporal);
 
     alert("¡Foto confirmada y guardada con éxito!");
     
-    // Reiniciar la app para tomar otra foto si se desea
+    // Volver automáticamente a la cámara para tomar otra si se desea
     btnRepetir.click();
 });
 

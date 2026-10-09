@@ -5,7 +5,7 @@
 }
 
 body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, Verdana, Geneva, Tahoma, sans-serif;
     background-color: #040e31;
     color: #f8fafc;
     display: flex;
@@ -22,7 +22,7 @@ body {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     text-align: center;
     width: 100%;
-    max-width: 520px; /* Tarjeta más ancha por defecto para ordenador */
+    max-width: 520px;
 }
 
 h2 {
@@ -43,7 +43,7 @@ h2 {
 .video-container {
     position: relative;
     width: 100%;
-    aspect-ratio: 4 / 3; /* Formato horizontal clásico */
+    aspect-ratio: 4 / 3;
     border-radius: 14px;
     overflow: hidden;
     background-color: #000;
@@ -55,6 +55,7 @@ video {
     height: 100%;
     object-fit: cover;
     display: block;
+    transform: scaleX(-1); /* <--- Añade esto para invertir el espejo y que se mueva de forma natural */
 }
 
 /* MARCO GUÍA HORIZONTAL (Ordenador) */
@@ -97,13 +98,6 @@ video {
     background-color: #038a30;
 }
 
-.controls button.btn-secondary {
-    background-color: transparent;
-    border: 1px solid #5099ff;
-    color: #cbd5e1;
-    font-size: 0.85rem;
-}
-
 .preview-container h3 {
     font-size: 1rem;
     margin: 15px 0 10px;
@@ -114,6 +108,7 @@ canvas {
     width: 100%;
     border-radius: 12px;
     display: block;
+    margin-bottom: 20px;
 }
 
 .hidden {
@@ -129,12 +124,10 @@ canvas {
         padding: 16px;
     }
 
-    /* Cambia el visor a VERTICAL en móviles */
     .video-container {
         aspect-ratio: 3 / 4; 
     }
 
-    /* Ajusta el marco guía para móviles */
     .document-guide {
         width: 85%;
         height: 75%;

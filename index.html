@@ -4,21 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Captura de Documento</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <div class="camera-card">
-        <h2>Captura de Rostro</h2>
-        <p class="instruction">Coloca tu rostro dentro del marco</p>
+        <h2>Captura de Documento</h2>
+        <p class="instruction">Coloca tu documento dentro del marco</p>
 
-        <!-- Visor de la cámara con marco guía -->
-        <div class="video-container">
+        <!-- Visor de la cámara con marco guía (Se oculta al hacer la foto) -->
+        <div class="video-container" id="videoContainer">
             <video id="webcam" autoplay playsinline></video>
             <div class="document-guide"></div>
+        </div>
+
+        <!-- Vista previa de la foto tomada (Oculta al inicio) -->
+        <div class="preview-container hidden" id="previewContainer">
+            <h3>Vista previa capturada:</h3>
+            <canvas id="canvas"></canvas>
         </div>
 
         <!-- Botones de acción -->
@@ -26,12 +29,6 @@
             <button id="btnTomarFoto">Tomar Foto</button>
             <button id="btnRepetir" class="hidden">Repetir Foto</button>
             <button id="btnConfirmar" class="hidden">Confirmar Foto</button>
-        </div>
-
-        <!-- Vista previa de la foto tomada -->
-        <div class="preview-container hidden" id="previewContainer">
-            <h3>Vista previa capturada:</h3>
-            <canvas id="canvas"></canvas>
         </div>
     </div>
 
