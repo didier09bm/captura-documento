@@ -22,7 +22,7 @@ body {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     text-align: center;
     width: 100%;
-    max-width: 520px; /* Tarjeta un poco más ancha */
+    max-width: 520px; /* Tarjeta más ancha por defecto para ordenador */
 }
 
 h2 {
@@ -33,17 +33,17 @@ h2 {
 }
 
 .instruction {
-    color: #4ade80; /* Texto verde por defecto */
+    color: #4ade80; 
     font-size: 0.95rem;
     margin-bottom: 20px;
     font-weight: 600;
 }
 
-/* Visor responsivo */
+/* Visor por defecto (HORIZONTAL para Ordenador) */
 .video-container {
     position: relative;
     width: 100%;
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 4 / 3; /* Formato horizontal clásico */
     border-radius: 14px;
     overflow: hidden;
     background-color: #000;
@@ -57,24 +57,19 @@ video {
     display: block;
 }
 
-/* MARCO MÁS GRANDE (Verde por defecto) */
+/* MARCO GUÍA HORIZONTAL (Ordenador) */
 .document-guide {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 88%;  /* Aumentado de 75% a 88% */
-    height: 70%; /* Aumentado de 55% a 70% */
+    width: 88%;  
+    height: 70%; 
     border: 4px solid #22c55e;
     border-radius: 14px;
     box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.6);
     pointer-events: none;
     transition: border-color 0.3s ease;
-}
-
-/* Estado ROJO cuando no está bien posicionado */
-.document-guide.invalid {
-    border-color: #ef4444;
 }
 
 /* Estilos de botones */
@@ -102,20 +97,11 @@ video {
     background-color: #038a30;
 }
 
-.controls button:disabled {
-    background-color: #cddff8;
-    cursor: not-allowed;
-}
-
 .controls button.btn-secondary {
     background-color: transparent;
     border: 1px solid #5099ff;
     color: #cbd5e1;
     font-size: 0.85rem;
-}
-
-.controls button.btn-secondary:hover {
-    background-color: #ffffff;
 }
 
 .preview-container h3 {
@@ -134,14 +120,23 @@ canvas {
     display: none !important;
 }
 
-/* Ajuste específico para móviles */
-@media (max-width: 480px) {
+/* ==========================================
+   ADAPTACIÓN AUTOMÁTICA PARA MÓVILES (Vertical)
+   ========================================== */
+@media (max-width: 768px) {
     .camera-card {
+        max-width: 420px;
         padding: 16px;
     }
 
+    /* Cambia el visor a VERTICAL en móviles */
+    .video-container {
+        aspect-ratio: 3 / 4; 
+    }
+
+    /* Ajusta el marco guía para móviles */
     .document-guide {
-        width: 92%;  /* Marco casi completo en teléfonos */
-        height: 65%;
+        width: 85%;
+        height: 75%;
     }
 }
